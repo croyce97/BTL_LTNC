@@ -144,11 +144,11 @@ void Play(SDL_Window* &window, SDL_Renderer* &renderer, SDL_Texture *NhanVat){
     NV.y = 200;
     NV.h /= 5;
     NV.w /= 5;
-     float tiLe[8] = {1.5, 1.2, 2.2, 1.8};
+     float tiLe[4] ={2.2, 1.4,2.8, 1.8};
                                 for(int i=0; i<4; i++){
                                     SDL_QueryTexture(VatCanTren, NULL, NULL, &CotTren[i].w, &CotTren[i].h);
                                     CotTren[i].y = 0;
-                                    CotTren[i].x = 350 + i*325;
+                                    CotTren[i].x = 300 + i*300;
                                     CotTren[i].w /= tiLe[i];
                                     CotTren[i].h /= tiLe[i];
 
@@ -163,21 +163,18 @@ void Play(SDL_Window* &window, SDL_Renderer* &renderer, SDL_Texture *NhanVat){
             if(g_event.type == SDL_KEYDOWN){
                 cerr<<""<<SDL_GetKeyName(g_event.key.keysym.sym)<<""<<endl;
                 switch(g_event.key.keysym.sym){
-                    case SDLK_w: NV.y-=25; break;
-                    case SDLK_x: NV.y+=25; break;
+                    case SDLK_w: NV.y-=35; break;
+                    case SDLK_x: NV.y+=35; break;
                 }
             }
          SDL_RenderCopy(renderer, Background, NULL, NULL);
          SDL_RenderCopy(renderer, NhanVat, NULL, &NV);
             for(int i=0; i<4; i++){
-                CotTren[i].x--;
+                CotTren[i].x-=1.5;
                 CotDuoi[i].x = CotTren[i].x;
                 if(CotDuoi[i].x == 100) diem++;
                 if(CotTren[i].x <= 0){
                     CotTren[i].x = 1200;
-                    srand(time(0));
-                    tiLe[i] = rand() %7 + 3;
-                    tiLe[i] *= 4.0/10;
                     SDL_QueryTexture(VatCanTren, NULL, NULL, &CotTren[i].w, &CotTren[i].h);
                     CotTren[i].w /= tiLe[i];
                     CotTren[i].h /= tiLe[i];
@@ -191,7 +188,8 @@ void Play(SDL_Window* &window, SDL_Renderer* &renderer, SDL_Texture *NhanVat){
                  SDL_RenderCopy(renderer, VatCanTren, NULL, &CotTren[i]);
                  SDL_RenderCopy(renderer, VatCanDuoi, NULL, &CotDuoi[i]);
             }
-        NV.y++;
+        NV.y+=1.8;
+        
         if(NV.y <=20)
             NV.y = 20;
         if(NV.y >= 550)
